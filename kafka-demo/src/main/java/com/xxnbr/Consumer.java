@@ -19,15 +19,17 @@ public class Consumer {
     properties.put(ConsumerConfig.GROUP_ID_CONFIG, "group1");
     properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
-    var consumer = new KafkaConsumer<String, String>(properties);
+    try (var consumer = new KafkaConsumer<String, String>(properties)) {
 
-    consumer.subscribe(Arrays.asList("test-1"));
+      consumer.subscribe(Arrays.asList("test-1"));
 
-    var records = consumer.poll(Duration.ofMinutes(1));
+      while (true) {
+        var records = consumer.poll(Duration.ofSeconds(1));
 
-    records.forEach(r -> System.out.println(r.value()));
+        records.forEach(r -> System.out.println(r.value()));
+      }
 
-    consumer.close();
+    }
 
   }
 
