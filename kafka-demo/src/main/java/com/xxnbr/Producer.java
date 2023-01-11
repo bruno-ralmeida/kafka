@@ -9,8 +9,8 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class App {
-    static Logger logger = LoggerFactory.getLogger(App.class);
+public class Producer {
+    static Logger logger = LoggerFactory.getLogger(Producer.class);
 
     public static void main(String[] args) {
 
@@ -23,7 +23,7 @@ public class App {
         var producer = new KafkaProducer<String, String>(properties);
 
         for (int i = 0; i <= 1000; i++) {
-            producer.send(new ProducerRecord<>("test-java", String.valueOf(i), "MSG = " + i));
+            producer.send(new ProducerRecord<>("test-1", "MSG = " + i));
         }
 
         producer.close();
